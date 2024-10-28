@@ -98,7 +98,7 @@ export default function UserResult({ params }: Readonly<UserResultParams>) {
                     <p className="flex truncate text-xs gap-2">
                       {
                         data?.data?.twitter_username && (
-                          <span className="flex gap-1 hover:text-sky-400" onClick={goTwitter}>
+                          <span className="flex gap-1 items-center hover:text-sky-400" onClick={goTwitter}>
                             <TwitterLogoIcon />
                             {data?.data?.twitter_username}
                           </span>
@@ -106,7 +106,7 @@ export default function UserResult({ params }: Readonly<UserResultParams>) {
                       }
                       {
                         data?.data?.email && (
-                          <span className="flex gap-1"><EnvelopeClosedIcon />{data?.data?.email}</span>
+                          <span className="flex gap-1 items-center"><EnvelopeClosedIcon />{data?.data?.email}</span>
                         )
                       }
                     </p>

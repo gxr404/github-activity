@@ -4,6 +4,7 @@ Optimize the display of recent activities of GitHub users
 
 ![banner](https://socialify.git.ci/gxr404/github-activity/image?font=KoHo&forks=1&issues=1&name=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Dark)
 
+[Live Demo](https://github-activity-one.vercel.app/)
 
 ## Getting Started
 
@@ -18,3 +19,16 @@ pnpm dev
 # or
 bun dev
 ```
+
+## Deploy on Vercel
+
+[<img src="https://vercel.com/button" alt="Deploy on Zeabur" height="30">](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgxr404%2Fgithub-activity&env=GITHUB_TOKEN&project-name=github-activity&repository-name=github-activity)
+
+### Environment Variables
+
+1. [Create Token](https://github.com/settings/tokens?type=beta)
+2. write `.env` file
+
+    ```env
+    GITHUB_TOKEN=YOUR_GITHUB_TOKEN
+    ```
