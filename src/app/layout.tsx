@@ -17,7 +17,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: 'Github Activity',
-  description: 'Github Activity',
+  description: 'Github Activity'
 }
 
 export default function RootLayout({
