@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu'
@@ -5,10 +6,20 @@ import { Button } from './ui/button'
 
 interface Props {
   className?: string
+  defaultTheme?: THEME_TYPE
 }
+
+export type THEME_TYPE = 'light' | 'dark'
 
 export function ThemeSwitch(props: Readonly<Props>) {
   const { setTheme } = useTheme()
+
+  useEffect(() => {
+    if (props.defaultTheme) {
+      setTheme(props.defaultTheme)
+    }
+  }, [props.defaultTheme, setTheme])
+
   return (
     <div className={props.className}>
       <DropdownMenu>

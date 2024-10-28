@@ -10,32 +10,48 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ActivityListMemo } from '@/components/ActivityList/index'
 import { AuthorPRListMemo } from '@/components/AuthorPRList'
 import { AuthorInvolvesListMemo } from '@/components/AuthorInvolvesList'
-import { ThemeSwitch } from '@/components/ThemeSwitch'
+import { THEME_TYPE, ThemeSwitch } from '@/components/ThemeSwitch'
 import { Button } from '@/components/ui/button'
 import { MagnifyingGlassIcon, GitHubLogoIcon, TwitterLogoIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons'
 import { goGithub } from '@/lib/utils'
 
-interface UserResultParams {
-  params: {
-    username: string
-  }
-}
 
 const TABS_TYPE = {
   ACTIVITY: 'activity',
-  AUTHOR_PR: 'author',
+  AUTHOR_PR: 'author_pr',
   INVOLVES_ISSUES: 'involves_issues'
 } as const
 
-export default function UserResult({ params }: Readonly<UserResultParams>) {
+type Keys = keyof typeof TABS_TYPE
+type TABS_VALUE = typeof TABS_TYPE[Keys]
+
+interface UserResultParams {
+  params: {
+    username: string
+  },
+  searchParams: {
+    tab: TABS_VALUE,
+    theme: THEME_TYPE
+  }
+}
+
+
+export default function UserResult({ params, searchParams }: Readonly<UserResultParams>) {
   const router = useRouter()
   const { toast } = useToast()
   const { data, isFetched } = useUserInfo({name: params.username})
   const [currentTab, setCurrentTab] = useState<string>(TABS_TYPE.ACTIVITY)
   const [domLoaded, setDomLoaded] = useState(false)
+  const [defaultTheme, setDefaultTheme] = useState<THEME_TYPE | undefined>()
 
   useEffect(() => {
     setDomLoaded(true)
+    if (Object.values(TABS_TYPE).includes(searchParams.tab)) {
+      setCurrentTab(searchParams.tab)
+    }
+    if (['light', 'dark'].includes(searchParams.theme)) {
+      setDefaultTheme(searchParams.theme)
+    }
   }, [])
 
   useEffect(() => {
@@ -78,7 +94,7 @@ export default function UserResult({ params }: Readonly<UserResultParams>) {
           <Button variant="ghost" className="h-8 w-8 px-0" onClick={goGithub}>
             <GitHubLogoIcon />
           </Button>
-          <ThemeSwitch />
+          <ThemeSwitch defaultTheme={defaultTheme} />
         </div>
       )}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-[calc(100vw-4rem)] sm:max-w-[650px] min-h-full">
