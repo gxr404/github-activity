@@ -12,6 +12,11 @@ export function PushEvent(props: Readonly<Props>) {
     // location.href = `https://github.com/${data.repo.name}/commit/${data?.payload?.head}`
     window.open(`https://github.com/${data.repo.name}/commit/${data?.payload?.head}`, '_blank')
   }
+  function commitClick(event: React.MouseEvent<HTMLElement>, sha: string ) {
+      event.stopPropagation()
+      if (!sha) return
+      window.open(`https://github.com/${data.repo.name}/commit/${sha}`, '_blank')
+  }
 
   return (
     <div>
@@ -32,12 +37,12 @@ export function PushEvent(props: Readonly<Props>) {
               data.payload?.commits.map((item) => {
                 return (
                   <li key={item.message}>
-                    <a
-                      className="truncate block hover:text-green-600"
-                      target="_blank"
-                      href={`https://github.com/${data.repo.name}/commit/${item.sha}`} >
+                    <span
+                      className="truncate block hover:text-green-600 cursor-pointer"
+                      onClick={(e) => commitClick(e, item.sha)}
+                      >
                       {item.message}
-                    </a>
+                    </span>
                   </li>
                 )
               })

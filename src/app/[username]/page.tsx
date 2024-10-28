@@ -114,7 +114,9 @@ export default function UserResult({ params, searchParams }: Readonly<UserResult
                     <p className="flex truncate text-xs gap-2">
                       {
                         data?.data?.twitter_username && (
-                          <span className="flex gap-1 items-center hover:text-sky-400" onClick={goTwitter}>
+                          <span
+                            className="flex gap-1 items-center hover:text-sky-500"
+                            onClick={goTwitter}>
                             <TwitterLogoIcon />
                             {data?.data?.twitter_username}
                           </span>

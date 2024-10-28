@@ -70,7 +70,7 @@ export function ActivityList(props: Readonly<Props>) {
       {/* <p>ActivityList {page} -- <button onClick={() => setPage(page+1)}>Add</button></p> */}
       {
         activityList.map((item, index) => (
-          <RenderItem key={index} data={item} />
+          <RenderItem key={`ActivityListItem_${index}`} data={item} />
         ))
       }
       <InfiniteScroll

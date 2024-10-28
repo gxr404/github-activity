@@ -14,6 +14,11 @@ export function GollumEvent(props: Readonly<Props>) {
   function cardClick() {
     window.open(`https://github.com/${data.repo.name}/wiki`, '_blank')
   }
+  function gollumEventClick(event: React.MouseEvent<HTMLElement>, url: string ) {
+    event.stopPropagation()
+    if (!url) return
+    window.open(url, '_blank')
+  }
   return (
     <div>
       <div className="text-[12px] text-gray-400 mb-[4px]">{formatDataTime(data.created_at)}</div>
@@ -33,12 +38,11 @@ export function GollumEvent(props: Readonly<Props>) {
               data.payload?.pages.map((item, index) => {
                 return (
                   <li key={`GollumEvent_${index}`}>
-                    <a
-                      className="truncate block hover:text-blue-500"
-                      target="_blank"
-                      href={item.html_url} >
+                    <span
+                      className="truncate block hover:text-blue-500 cursor-pointer"
+                      onClick={(e) => gollumEventClick(e, item.html_url)}>
                       {toActionWord(item.action)} - {item.title}
-                    </a>
+                    </span>
                   </li>
                 )
               })

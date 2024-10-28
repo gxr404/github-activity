@@ -30,7 +30,7 @@ export function AuthorInvolvesList(props: Readonly<Props>) {
   const { username } = props
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
-  const [authorPRList, setAuthorPRList] = useState<SearchItem[]>([])
+  const [authorInvolvesList, setAuthorInvolvesList] = useState<SearchItem[]>([])
 
   const { data, isFetched } = useSearch({
     name: username,
@@ -40,9 +40,9 @@ export function AuthorInvolvesList(props: Readonly<Props>) {
 
   useEffect(() => {
     if (Array.isArray(data?.data?.items)) {
-      setAuthorPRList([
-        ...authorPRList,
-        ...data?.data?.items
+      setAuthorInvolvesList([
+        ...authorInvolvesList,
+        ...(data?.data?.items || [])
       ])
       setHasMore(data?.data?.items?.length >= 30)
     }
@@ -56,7 +56,7 @@ export function AuthorInvolvesList(props: Readonly<Props>) {
     <div className={cn(authorInvolvesListClassName)}>
       {/* <p>ActivityList {page} -- <button onClick={() => setPage(page+1)}>Add</button></p> */}
       {
-        authorPRList.map((item, index) => (
+        authorInvolvesList.map((item, index) => (
           <RenderItem key={`AuthorInvolvesList_${index}`} data={item} />
         ))
       }

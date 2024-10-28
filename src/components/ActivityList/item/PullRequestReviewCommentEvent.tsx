@@ -13,6 +13,12 @@ export function PullRequestReviewCommentEvent(props: Readonly<Props>) {
     window.open(data.payload.comment.html_url, '_blank')
   }
 
+  function repoClick(event: React.MouseEvent<HTMLElement>, url: string ) {
+    event.stopPropagation()
+    if (!url) return
+    window.open(url, '_blank')
+  }
+
   return (
     <div>
       <div className="text-[12px] text-gray-400 mb-[4px]">{formatDataTime(data.created_at)}</div>
@@ -27,21 +33,19 @@ export function PullRequestReviewCommentEvent(props: Readonly<Props>) {
             <span>{data.repo.name}</span>
           </div>
           <div className="flex justify-evenly items-center my-2">
-            <a
-              className="hover:text-green-600 flex gap-1 items-center max-w-[40%]"
-              target="_blank"
-              href={`https://github.com/${data?.payload?.pull_request?.base?.repo.full_name}/tree/${data?.payload?.pull_request?.base?.ref}`}>
+            <span
+              className="hover:text-green-600 flex gap-1 items-center max-w-[40%] cursor-pointer"
+              onClick={(e) => repoClick(e, `https://github.com/${data?.payload?.pull_request?.base?.repo.full_name}/tree/${data?.payload?.pull_request?.base?.ref}`)}>
               <FolderCode className="w-[14px] h-[14px] min-w-[14px]" />
               <span className="truncate">{data.payload.pull_request.base.label}</span>
-            </a>
+            </span>
             <ArrowLeft className="text-gray-400 w-[16px] h-[16px]"  />
-            <a
-              className="hover:text-green-600 flex gap-1 items-center max-w-[40%]"
-              target="_blank"
-              href={`https://github.com/${data?.payload?.pull_request?.head?.repo.full_name}/tree/${data?.payload?.pull_request?.head?.ref}`}>
+            <span
+              className="hover:text-green-600 flex gap-1 items-center max-w-[40%] cursor-pointer"
+              onClick={(e) => repoClick(e, `https://github.com/${data?.payload?.pull_request?.head?.repo.full_name}/tree/${data?.payload?.pull_request?.head?.ref}`)}>
               <FolderCode className="w-[14px] h-[14px] min-w-[14px]" />
               <span className="truncate">{data.payload.pull_request.head.label}</span>
-            </a>
+            </span>
           </div>
           <div className="text-gray-400 truncate">
             {data.payload.comment.body}
