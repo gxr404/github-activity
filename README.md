@@ -12,6 +12,10 @@ Optimize the display of recent activities of GitHub users
 
 <img src="./docs/assets/preview_2.png" width="500" style="border-radius:6px"/>
 
+## Recommend
+
+Collaborating with [github-activity-webext](https://github.com/gxr404/github-activity-webext) browser extension for a better user experience
+
 ## Getting Started
 
 First, run the development server:
