@@ -41,6 +41,12 @@ export async function GET(req: NextRequest) {
     })
   })
   const resJSON = await res.json()
+  if (resJSON?.message && resJSON?.errors){
+    return Response.json({
+      code: RESPONSE_CODE.ERROR,
+      msg: resJSON?.message || 'UNKNOWN ERROR'
+    })
+  }
   return Response.json({
     code: RESPONSE_CODE.SUCCESS,
     msg: 'SUCCESS',

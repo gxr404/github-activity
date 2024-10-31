@@ -31,6 +31,7 @@ export function AuthorInvolvesList(props: Readonly<Props>) {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const [authorInvolvesList, setAuthorInvolvesList] = useState<SearchItem[]>([])
+  const [hasError, setHasError] = useState(false)
 
   const { data, isFetched } = useSearch({
     name: username,
@@ -46,9 +47,13 @@ export function AuthorInvolvesList(props: Readonly<Props>) {
       ])
       setHasMore(data?.data?.items?.length >= 30)
     }
+    if (data?.code !== 0) {
+      setHasError(true)
+    }
   }, [data, isFetched])
 
   function next() {
+    if (hasError) return
     setPage(page+1)
   }
 
@@ -65,7 +70,7 @@ export function AuthorInvolvesList(props: Readonly<Props>) {
         isLoading={!isFetched}
         next={next}
         threshold={0}>
-        {hasMore ? (
+        {(hasMore && !hasError) ? (
           <div className="flex justify-center">
             <Loader2 className="my-2 h-6 w-6 animate-spin" />
           </div>
@@ -74,7 +79,6 @@ export function AuthorInvolvesList(props: Readonly<Props>) {
             ⎯ END  ⎯
           </div>
         )}
-
       </InfiniteScroll>
     </div>
   )
