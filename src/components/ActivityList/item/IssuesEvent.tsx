@@ -11,7 +11,20 @@ interface Props {
 export function IssuesEvent(props: Readonly<Props>) {
   const { data } = props
   const label = data?.payload?.action?.toLocaleUpperCase()
+  // function formatLabel(label: string ='') {
+  //   let res = label?.toLocaleUpperCase()
+  //   res = res === 'CLOSED' && pull_request?.merged_at ? 'MERGED' : res
+  //   return res
+  // }
 
+  function getLabelClass(state: string) {
+    const stateClass = {
+      'CLOSED': 'text-white bg-destructive hover:bg-destructive/80',
+      'MERGED': 'text-white bg-violet-800 hover:bg-violet-900',
+    }
+    const defaultClass = 'text-white bg-green-600 hover:bg-green-700'
+    return stateClass[state as keyof typeof stateClass] || defaultClass
+  }
   return (
     <div>
       <div className="text-[12px] text-gray-400 mb-[4px]">
@@ -30,8 +43,8 @@ export function IssuesEvent(props: Readonly<Props>) {
           </div>
           <span className="flex items-center gap-1 text-gray-400">
             <Badge
-              className={`rounded-full shadow-transparent text-[12px] px-2 py-0.2 ${label === 'CLOSED' ? '' : 'text-gray-400'}`}
-              variant={label === 'CLOSED' ? 'destructive' : 'outline'}>
+              className={`rounded-full shadow-transparent text-[12px] px-2 py-0.2 ${getLabelClass(label)}`}
+              variant="secondary">
               {label}
             </Badge>
           </span>
