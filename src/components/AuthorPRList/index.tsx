@@ -118,10 +118,10 @@ function RenderItem(props: Readonly<RenderItemProps>) {
 
   function getStateClass(state: string) {
     const stateClass = {
-      'CLOSED': 'text-white',
-      'MERGED': 'text-green-50 bg-green-600',
+      'CLOSED': 'text-white bg-destructive hover:bg-destructive/80',
+      'MERGED': 'text-white bg-violet-800 hover:bg-violet-900',
     }
-    const defaultClass = 'text-gray-400'
+    const defaultClass = 'text-white bg-green-600 hover:bg-green-700'
     return stateClass[state as keyof typeof stateClass] || defaultClass
   }
   const repo = getRepo(html_url)
@@ -141,7 +141,7 @@ function RenderItem(props: Readonly<RenderItemProps>) {
             </div>
             <Badge
               className={`rounded-full shadow-transparent text-[12px] px-2 py-0.2 ${getStateClass(formatState(state))}`}
-              variant={formatState(state) === 'CLOSED' ? 'destructive' : 'secondary'}>
+              variant="secondary">
               {formatState(state)}
             </Badge>
             {/* <span className="flex items-center gap-1 text-gray-400">
