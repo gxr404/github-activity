@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import InfiniteScroll from '@/components/ui/infinite-scroll'
+import { Badge } from '@/components/ui/badge'
 import { useSearch } from '@/query/useSearch'
 import { cn, formatDataTime } from '@/lib/utils'
 
@@ -89,7 +90,7 @@ interface RenderItemProps {
 }
 
 function RenderItem(props: Readonly<RenderItemProps>) {
-  const {html_url, created_at, title} = props.data
+  const {html_url, created_at, title, state, pull_request} = props.data
   function getRepo(prUrl: string) {
     if (!prUrl) {
       return {
@@ -108,6 +109,21 @@ function RenderItem(props: Readonly<RenderItemProps>) {
       repo
     }
   }
+
+  function formatState(state: string) {
+    let res = state?.toLocaleUpperCase()
+    res = res === 'CLOSED' && pull_request?.merged_at ? 'MERGED' : res
+    return res
+  }
+
+  function getStateClass(state: string) {
+    const stateClass = {
+      'CLOSED': 'text-white',
+      'MERGED': 'text-green-50 bg-green-600',
+    }
+    const defaultClass = 'text-gray-400'
+    return stateClass[state as keyof typeof stateClass] || defaultClass
+  }
   const repo = getRepo(html_url)
   return (
     <div>
@@ -119,10 +135,15 @@ function RenderItem(props: Readonly<RenderItemProps>) {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              {/* <MessageSquare className="text-sky-400 w-[18px] h-[18px]"/> */}
-              <span className="text-green-600 font-bold">PR</span>
-              <span>{repo.user}/{repo.repo}</span>
+                {/* <MessageSquare className="text-sky-400 w-[18px] h-[18px]"/> */}
+                <span className="text-green-600 font-bold">PR</span>
+                <span>{repo.user}/{repo.repo}</span>
             </div>
+            <Badge
+              className={`rounded-full shadow-transparent text-[12px] px-2 py-0.2 ${getStateClass(formatState(state))}`}
+              variant={formatState(state) === 'CLOSED' ? 'destructive' : 'secondary'}>
+              {formatState(state)}
+            </Badge>
             {/* <span className="flex items-center gap-1 text-gray-400">
               <Tag className="text-yellow-400 w-[16px] h-[16px]" />
               {data.payload.release.name}
