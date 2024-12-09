@@ -20,3 +20,7 @@ export function formatDataTime(str: string) {
 export function goGithub() {
   location.href = 'https://github.com/gxr404/github-activity'
 }
+
+export function goChromeStore() {
+  location.href = 'https://chromewebstore.google.com/detail/github-activity/oniblhabpoedbigijdfkmogeieamlbkk'
+}

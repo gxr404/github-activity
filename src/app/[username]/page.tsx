@@ -12,8 +12,9 @@ import { AuthorPRListMemo } from '@/components/AuthorPRList'
 import { AuthorInvolvesListMemo } from '@/components/AuthorInvolvesList'
 import { THEME_TYPE, ThemeSwitch } from '@/components/ThemeSwitch'
 import { Button } from '@/components/ui/button'
+import { ChromeStoreIcon } from '@/components/ChromeStoreIcon'
 import { MagnifyingGlassIcon, GitHubLogoIcon, TwitterLogoIcon, EnvelopeClosedIcon } from '@radix-ui/react-icons'
-import { goGithub } from '@/lib/utils'
+import { goChromeStore, goGithub } from '@/lib/utils'
 
 
 const TABS_TYPE = {
@@ -88,13 +89,16 @@ export default function UserResult({ params, searchParams }: Readonly<UserResult
     <div className="grid grid-rows-[20px_1fr_20px] grid-cols-[1fr] justify-items-center h-screen p-8 sm:p-10 font-[family-name:var(--font-geist-sans)]">
       { domLoaded && (
         <div className="flex gap-1 absolute sm:top-10 sm:right-20 top-5 right-5">
-          <Button variant="ghost" className="h-8 w-8 px-0" onClick={goHome}>
+          <Button variant="ghost" className="h-8 w-8 px-0" onClick={goHome} title="search">
             <MagnifyingGlassIcon />
           </Button>
-          <Button variant="ghost" className="h-8 w-8 px-0" onClick={goGithub}>
+          <Button variant="ghost" className="h-8 w-8 px-0" onClick={goGithub} title="github">
             <GitHubLogoIcon />
           </Button>
           <ThemeSwitch defaultTheme={defaultTheme} />
+          <Button variant="ghost" className="h-8 w-8 px-0" onClick={goChromeStore} title="Chrome Web Store">
+            <ChromeStoreIcon />
+          </Button>
         </div>
       )}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full max-w-[calc(100vw-4rem)] sm:max-w-[650px] min-h-full">
